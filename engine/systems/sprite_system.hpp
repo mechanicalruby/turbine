@@ -16,6 +16,7 @@ public:
 
     auto initialize_mesh(SpriteComponent& sprite) -> void;
     auto update(const std::shared_ptr<Scene>& scene) -> void;
+    auto draw(const std::shared_ptr<Scene>& scene) -> void;
 private:
 #if !PSP
     std::unique_ptr<Shader> sprite_shader;

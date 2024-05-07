@@ -52,6 +52,7 @@ int main(void) {
 	auto player = scene->create_entity();
 	player.add_component<Turbine::SpriteComponent>();
 	player.get_component<Turbine::SpriteComponent>().texture = texture;
+	player.get_component<Turbine::SpriteComponent>().transform = Turbine::TransformComponent({20.0f, 20.0f}, {1.0f, 1.0f}, 0.0f);
 	sprite_system.initialize_mesh(player.get_component<Turbine::SpriteComponent>());
 
 	auto raft = scene->create_entity();
@@ -65,7 +66,7 @@ int main(void) {
 		renderer->set_blend_mode(BLENDING_ALPHA);
 		renderer->clear(0, 40, 125, 255);
 
-		sprite_system.update(scene);
+		sprite_system.draw(scene);
 
 		renderer->end_frame();
 	}

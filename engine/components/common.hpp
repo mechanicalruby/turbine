@@ -18,6 +18,8 @@ struct SpriteComponent {
     std::unique_ptr<FixedMesh<Vertex, 4, 6>> mesh;
     std::shared_ptr<Texture> texture;
     TransformComponent transform;
+    Rectangle uv;
+    Vector2 origin;
 };
 
 // struct CameraComponent {
