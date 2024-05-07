@@ -1,3 +1,2 @@
 # turbine
-turbine is a wip application
-not intended for production or general use
+turbine engine is a simple cross-platform game engine with homebrew development in mind

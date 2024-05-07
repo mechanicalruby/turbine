@@ -35,32 +35,32 @@
 
 int main(void) {
 #if PSP
-    GU_Renderer* renderer = new GU_Renderer();
-    sce_psp::setup_callbacks();
+	GU_Renderer* renderer = new GU_Renderer();
+	sce_psp::setup_callbacks();
 #else
-    OpenGL_Renderer* renderer = new OpenGL_Renderer();
+	OpenGL_Renderer* renderer = new OpenGL_Renderer();
 #endif
-    renderer->initialize("Turbine", 480, 272);
+	renderer->initialize("Turbine", 480, 272);
 
-    auto texman = std::make_unique<Turbine::TextureManager>();
-    auto texture = texman->load_texture("atlas", "./sample/bread1.png", true, TB_NEAREST, TB_NEAREST);
+	auto texman = std::make_unique<Turbine::TextureManager>();
+	auto texture = texman->load_texture("atlas", "./sample/bread1.png", true, TB_NEAREST, TB_NEAREST);
 	auto texture1 = texman->load_texture("raft", "./sample/raft.png", true, TB_NEAREST, TB_NEAREST);
 
 	Turbine::SpriteSystem sprite_system;
 
-    auto scene = std::make_shared<Turbine::Scene>();
-    auto player = scene->create_entity();
+	auto scene = std::make_shared<Turbine::Scene>();
+	auto player = scene->create_entity();
 	player.add_component<Turbine::SpriteComponent>();
 	player.get_component<Turbine::SpriteComponent>().texture = texture;
-    sprite_system.initialize_mesh(player.get_component<Turbine::SpriteComponent>());
+	sprite_system.initialize_mesh(player.get_component<Turbine::SpriteComponent>());
 
 	auto raft = scene->create_entity();
 	raft.add_component<Turbine::SpriteComponent>();
 	raft.get_component<Turbine::SpriteComponent>().texture = texture1;
-    sprite_system.initialize_mesh(raft.get_component<Turbine::SpriteComponent>());
+	sprite_system.initialize_mesh(raft.get_component<Turbine::SpriteComponent>());
 
-    renderer->set_ortho();
-    while(true) {
+	renderer->set_ortho();
+	while(true) {
 		renderer->begin_frame();
 		renderer->set_blend_mode(BLENDING_ALPHA);
 		renderer->clear(0, 40, 125, 255);
@@ -68,6 +68,6 @@ int main(void) {
 		sprite_system.update(scene);
 
 		renderer->end_frame();
-    }
-    return 0;
+	}
+	return 0;
 }
