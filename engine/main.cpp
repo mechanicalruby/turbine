@@ -29,37 +29,47 @@
 #include "scene/entity.hpp"
 
 #include "systems/sprite_system.hpp"
+#include "systems/camera_system.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.hpp"
 
-int main(void) {
+auto main(void) -> int {
 #if PSP
 	GU_Renderer* renderer = new GU_Renderer();
 	sce_psp::setup_callbacks();
 #else
 	OpenGL_Renderer* renderer = new OpenGL_Renderer();
+	glm::mat4 projection = glm::ortho(0.0f, 480.0f, 272.0f, 0.0f, -1.0f, 1.0f);
 #endif
 	renderer->initialize("Turbine", 480, 272);
 
 	auto texman = std::make_unique<Turbine::TextureManager>();
-	auto texture = texman->load_texture("atlas", "./sample/bread1.png", true, TB_NEAREST, TB_NEAREST);
+	auto texture = texman->load_texture("atlas", "./sample/player.png", true, TB_NEAREST, TB_NEAREST);
 	auto texture1 = texman->load_texture("raft", "./sample/raft.png", true, TB_NEAREST, TB_NEAREST);
 
 	Turbine::SpriteSystem sprite_system;
+	Turbine::CameraSystem camera_system;
 
 	auto scene = std::make_shared<Turbine::Scene>();
 	auto player = scene->create_entity();
+	player.add_component<Turbine::TransformComponent>(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 0.0f);
 	player.add_component<Turbine::SpriteComponent>();
 	player.get_component<Turbine::SpriteComponent>().texture = texture;
-	player.get_component<Turbine::SpriteComponent>().transform = Turbine::TransformComponent({20.0f, 20.0f}, {1.0f, 1.0f}, 0.0f);
+	player.get_component<Turbine::SpriteComponent>().transform = Turbine::TransformComponent({0.0f, 0.0f}, {1.0f, 1.0f}, 0.0f);
 	sprite_system.initialize_mesh(player.get_component<Turbine::SpriteComponent>());
-
+	
 	auto raft = scene->create_entity();
+	raft.add_component<Turbine::TransformComponent>(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 0.0f);
 	raft.add_component<Turbine::SpriteComponent>();
 	raft.get_component<Turbine::SpriteComponent>().texture = texture1;
+	raft.get_component<Turbine::SpriteComponent>().transform = Turbine::TransformComponent({20.0f, 20.0f}, {1.0f, 1.0f}, 0.0f);
 	sprite_system.initialize_mesh(raft.get_component<Turbine::SpriteComponent>());
 
+	auto camera = scene->create_entity();
+	camera.add_component<Turbine::CameraComponent>();
+	camera.add_component<Turbine::TransformComponent>(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 0.0f);
+	
 	renderer->set_ortho();
 	while(true) {
 		renderer->begin_frame();

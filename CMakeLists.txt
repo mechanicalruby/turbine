@@ -101,7 +101,7 @@ if(PSP)
         BACKGROUND_PATH NULL
         PREVIEW_PATH NULL
         TITLE ${PROJECT_NAME}
-	    # BUILD_PRX
+	    BUILD_PRX
     )
 endif()
 

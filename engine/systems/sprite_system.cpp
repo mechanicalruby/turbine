@@ -27,23 +27,26 @@ namespace Turbine {
 	}
 
 	auto SpriteSystem::draw(const std::shared_ptr<Scene>& scene) -> void {
-		auto view = scene->get_registry().view<Turbine::SpriteComponent>();
+		auto view = scene->get_registry().view<Turbine::SpriteComponent, Turbine::TransformComponent>();
 		for(auto entity: view) {
+			// Local transform of the sprite
 			auto &sprite = view.get<Turbine::SpriteComponent>(entity);
+			// Global transform of the host entity
+			auto &transform = view.get<Turbine::TransformComponent>(entity);
 
 		#if PSP
 			sceGumMatrixMode(GU_MODEL);
 			sceGumLoadIdentity();
 			ScePspFVector3 v = {
-				.x = sprite.transform.position.x,
-				.y = sprite.transform.position.y,
+				.x = sprite.transform.position.x + transform.position.x,
+				.y = sprite.transform.position.y + transform.position.y,
 				.z = -1.0f,
 			};
 			sceGumTranslate(&v);
 			sceGumRotateZ(sprite.transform.rotation);
 			ScePspFVector3 s = {
-				.x = sprite.transform.scale.x,
-				.y = sprite.transform.scale.y,
+				.x = sprite.transform.scale.x + transform.scale.x,
+				.y = sprite.transform.scale.y + transform.scale.y,
 				.z = -1.0f,
 			};
 			sceGumScale(&s);

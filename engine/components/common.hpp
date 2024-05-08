@@ -6,6 +6,7 @@
 #include "math/vector2.hpp"
 #include "renderer/mesh.hpp"
 #include "renderer/texture.hpp"
+#include "renderer/camera.hpp"
 
 namespace Turbine {
 struct TransformComponent {
@@ -22,10 +23,10 @@ struct SpriteComponent {
     Vector2 origin;
 };
 
-// struct CameraComponent {
-//     OrthographicCamera camera;
-//     bool active;
-// };
+struct CameraComponent {
+    Camera camera;
+    bool active;
+};
 }
     
 #endif
