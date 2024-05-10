@@ -11,7 +11,7 @@ include_directories("extern/")
 include_directories("extern/glm")
 include_directories("engine/")
 
-option(BUILD_EDITOR "Build Blueprint alongside Turbine" OFF)
+option(BUILD_EDITOR "Build Blueprint alongside Turbine" ON)
 
 if(PSP)
     set(BUILD_EDITOR OFF)
@@ -38,26 +38,18 @@ file(GLOB COMMON_SRC
 )
 
 if(UNIX)
+    include_directories("extern/imgui/")
     file(GLOB UNIX_SRC
         "engine/platform/linux-bsd/*.cpp"
         "engine/renderer/opengl/*.cpp"
         "engine/glad.c"
+
+        "extern/imgui/*.cpp"
+        "extern/imgui/backends/imgui_impl_glfw.cpp"
+        "extern/imgui/backends/imgui_impl_opengl3.cpp"
+        "editor/*.cpp"
     )
     list(APPEND COMMON_SRC ${UNIX_SRC})
-
-    # Build Blueprint if enabled.
-    if(BUILD_EDITOR)
-        include_directories("extern/imgui/")
-        include_directories("engine/")
-        file(GLOB EDITOR_SRC
-            "extern/imgui/*.cpp"
-            "extern/imgui/backends/imgui_impl_glfw.cpp"
-            "extern/imgui/backends/imgui_impl_opengl3.cpp"
-            "editor/*.cpp"
-        )
-        list(APPEND COMMON_SRC ${EDITOR_SRC})
-    endif()
-
     add_executable(${PROJECT_NAME} ${COMMON_SRC})
     target_link_libraries(${PROJECT_NAME}
         glfw

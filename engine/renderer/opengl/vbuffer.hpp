@@ -9,6 +9,7 @@ namespace Turbine {
 // Vertex buffer
 class OpenGLVertexBuffer : public VertexBuffer {
 public:
+    OpenGLVertexBuffer() = default;
     OpenGLVertexBuffer(const void* vertices, std::size_t size);
     virtual ~OpenGLVertexBuffer();
 

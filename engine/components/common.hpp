@@ -19,14 +19,24 @@ struct SpriteComponent {
     std::unique_ptr<FixedMesh<Vertex, 4, 6>> mesh;
     std::shared_ptr<Texture> texture;
     TransformComponent transform;
-    Rectangle uv;
+    Rectangle region_rect;
+    Vector2 offset;
     Vector2 origin;
+    unsigned int color;
+    bool centered;
+
+    SpriteComponent() : color(0xFFFFFFFF) {}
 };
 
 struct CameraComponent {
     Camera camera;
     bool active;
 };
+
+/*struct AnimationControllerComponent {
+    AnimationController controller;
+};*/
+
 }
     
 #endif

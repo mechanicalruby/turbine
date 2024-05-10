@@ -1,11 +1,15 @@
 #ifndef SPRITE_SYSTEM_HPP
 #define SPRITE_SYSTEM_HPP
 
+#include "renderer/varray.hpp"
+#include "renderer/vbuffer.hpp"
 #include "scene/scene.hpp"
 #include "components/common.hpp"
 
 #if !PSP
 #include "renderer/shader.hpp"
+#include "renderer/opengl/varray.hpp"
+#include "renderer/opengl/vbuffer.hpp"
 #endif
 
 namespace Turbine {
@@ -19,9 +23,11 @@ public:
     auto draw(const std::shared_ptr<Scene>& scene) -> void;
 private:
 #if !PSP
-    std::unique_ptr<Shader> sprite_shader;
+    std::shared_ptr<Shader> sprite_shader;
+    std::shared_ptr<OpenGLVertexBuffer> sprite_vbo;
+    std::shared_ptr<OpenGLVertexArray> sprite_vao;
+    BufferLayout vertex_layout;
 #endif
-
 };
 }
 

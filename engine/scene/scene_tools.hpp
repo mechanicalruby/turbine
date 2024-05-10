@@ -6,5 +6,6 @@
 namespace fs = std::filesystem;
 
 namespace Turbine {
-std::vector<std::string> get_scenes_in_directory(std::string path);
+std::vector<std::string> get_scenes_in_directory(const std::string& path);
+void deserialize_scene(const std::string& path, Scene& scene);
 }

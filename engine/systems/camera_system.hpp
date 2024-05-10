@@ -4,6 +4,8 @@
 #include "scene/scene.hpp"
 #include "components/common.hpp"
 
+// Each render pass using the CameraSystem will have its own EnTT group (e.g. "Game" and "UI")
+
 namespace Turbine {
 class CameraSystem {
 public:
